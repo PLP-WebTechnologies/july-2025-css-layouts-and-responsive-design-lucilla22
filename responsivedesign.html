@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Layout with Flexbox and Grid</title>
+    <style>
+        /*
+         * GLOBAL STYLES
+         * - Use a modern font and normalize box-sizing.
+         */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+        :root {
+            --primary-color: #3b82f6; /* A nice blue */
+            --secondary-color: #e5e7eb; /* Light gray */
+            --dark-color: #1f2937; /* Dark gray */
+            --light-color: #ffffff; /* White */
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--dark-color);
+            background-color: var(--secondary-color);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        /*
+         * HEADER
+         * - Simple header with centered text.
+         */
+        .site-header {
+            background-color: var(--dark-color);
+            color: var(--light-color);
+            padding: 2rem 1rem;
+            text-align: center;
+            border-bottom-left-radius: 1rem;
+            border-bottom-right-radius: 1rem;
+        }
+        
+        /*
+         * FLEXBOX LAYOUT FOR NAVIGATION
+         * - On small screens, links stack. On larger screens, they align horizontally.
+         */
+        .nav-bar {
+            background-color: var(--primary-color);
+            padding: 0.5rem 1rem;
+            border-radius: 1rem;
+            margin-top: 1rem;
+        }
+
+        .nav-list {
+            list-style: none;
+            display: flex; /* Activate Flexbox */
+            flex-direction: column; /* Default vertical stack for mobile */
+            gap: 1rem; /* Space between links */
+            align-items: center; /* Center items on mobile */
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--light-color);
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /*
+         * CSS GRID LAYOUT FOR MAIN CONTENT
+         * - The main container uses Grid to manage the content and sidebar.
+         * - Mobile layout is a single column by default.
+         */
+        .main-content-grid {
+            display: grid; /* Activate CSS Grid */
+            grid-template-areas:
+                "main-content"
+                "sidebar"; /* Stack main and sidebar for small screens */
+            gap: 2rem;
+            padding: 2rem 0;
+        }
+
+        .content-area {
+            grid-area: main-content;
+        }
+
+        .sidebar {
+            grid-area: sidebar;
+        }
+        
+        .section-card, .sidebar-card {
+            background-color: var(--light-color);
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        
+        .sidebar-card {
+            background-color: #d1d5db;
+        }
+        
+        /*
+         * FLEXBOX LAYOUT FOR CONTENT CARDS
+         * - Inside the content area, cards use Flexbox to wrap nicely.
+         */
+        .card-container {
+            display: flex; /* Activate Flexbox for card layout */
+            flex-direction: column; /* Stack cards vertically for mobile */
+            gap: 1rem; /* Space between cards */
+        }
+
+        .card {
+            background-color: var(--light-color);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            flex: 1 1 100%; /* Full width on mobile */
+        }
+
+        /*
+         * FOOTER
+         * - Simple footer for copyright info.
+         */
+        .site-footer {
+            background-color: var(--dark-color);
+            color: var(--light-color);
+            padding: 1rem;
+            text-align: center;
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
+        }
+
+        /*
+         * MEDIA QUERIES FOR RESPONSIVENESS
+         * - Adjust layouts for different screen sizes.
+         */
+        
+        /* Tablet Layout (>= 768px) */
+        @media (min-width: 768px) {
+            /* Adjust navigation to be horizontal */
+            .nav-list {
+                flex-direction: row; /* Horizontal alignment */
+                justify-content: center; /* Center links */
+            }
+
+            /* Adjust main content grid to a two-column layout */
+            .main-content-grid {
+                grid-template-columns: 2fr 1fr; /* 2 parts for main, 1 for sidebar */
+                grid-template-areas: "main-content sidebar"; /* Side-by-side layout */
+            }
+
+            /* Adjust content cards to be horizontal */
+            .card-container {
+                flex-direction: row; /* Horizontal alignment */
+                flex-wrap: wrap; /* Allow cards to wrap to the next line */
+            }
+
+            .card {
+                flex: 1 1 calc(50% - 0.5rem); /* Two cards per row with gap */
+            }
+        }
+
+        /* Desktop Layout (>= 1024px) */
+        @media (min-width: 1024px) {
+            .nav-list {
+                justify-content: flex-start; /* Align nav links to the left */
+            }
+
+            .card {
+                flex: 1 1 calc(33.333% - 0.666rem); /* Three cards per row with gap */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="site-header">
+            <h1>Responsive Layout</h1>
+            <p>Flexbox & Grid in Harmony</p>
+        </header>
+
+        <nav class="nav-bar">
+            <ul class="nav-list">
+                <li><a href="#" class="nav-link">Home</a></li>
+                <li><a href="#" class="nav-link">About</a></li>
+                <li><a href="#" class="nav-link">Services</a></li>
+                <li><a href="#" class="nav-link">Contact</a></li>
+            </ul>
+        </nav>
+
+        <main class="main-content-grid">
+            <section class="content-area">
+                <div class="section-card">
+                    <h2>Main Content Section</h2>
+                    <p>This area uses CSS Grid to create a flexible, two-column layout on larger screens, with the sidebar placed to the side. On smaller screens, the sidebar moves below the main content to ensure readability.</p>
+                </div>
+                
+                <div class="card-container">
+                    <article class="card">
+                        <h3>Article 1</h3>
+                        <p>This is a content card. The `card-container` uses Flexbox to arrange these articles in a responsive grid. On desktop, they will arrange in a row, and on mobile, they will stack vertically.</p>
+                    </article>
+                    <article class="card">
+                        <h3>Article 2</h3>
+                        <p>Flexbox is great for creating components that need to be aligned and distributed within a container, like these cards. The `flex-wrap: wrap` property allows them to flow naturally to the next line.</p>
+                    </article>
+                    <article class="card">
+                        <h3>Article 3</h3>
+                        <p>Each card is a Flex item, and its size can be easily controlled with `flex-grow`, `flex-shrink`, and `flex-basis`. We've used `flex: 1` here to allow them to grow and shrink proportionally.</p>
+                    </article>
+                    <article class="card">
+                        <h3>Article 4</h3>
+                        <p>This last card demonstrates how Flexbox handles an uneven number of items. It will simply fill the remaining space on the line, maintaining the layout's integrity without extra styling.</p>
+                    </article>
+                </div>
+            </section>
+            
+            <aside class="sidebar">
+                <div class="sidebar-card">
+                    <h3>Sidebar</h3>
+                    <p>This sidebar is part of the overall CSS Grid layout. It's positioned to the right of the main content on a desktop screen and will move to the bottom on a mobile device.</p>
+                    <ul>
+                        <li><a href="#">Link 1</a></li>
+                        <li><a href="#">Link 2</a></li>
+                        <li><a href="#">Link 3</a></li>
+                    </ul>
+                </div>
+            </aside>
+        </main>
+        
+        <footer class="site-footer">
+            <p>&copy; 2024 Responsive Webpage. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>
